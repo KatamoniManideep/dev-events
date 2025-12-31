@@ -1,42 +1,262 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-blue: #94eaff;
+  --color-light-100: #e7f2ff;
+  --color-light-200: #bdbdbd;
+  --color-border-dark: #151024;
+  --color-dark-100: #0d161a;
+  --color-dark-200: #182830;
+  --radius: 0.625rem;
+  --background: #030708;
+  --foreground: #ffffff;
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: #59deca;
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-b from-white via-white to-blue bg-clip-text font-semibold text-transparent;
+  }
+
+  .glass {
+    @apply rounded-md border-b bg-[#12121280]/50 bg-clip-padding backdrop-blur-xl backdrop-filter;
+    border-color: var(--color-border-dark);
+  }
+
+  .card-shadow {
+    box-shadow: 0px 4px 40px 0px #00000066;
   }
 }
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+@layer base {
+  * {
+    border-color: var(--border);
+    outline-color: var(--ring);
+    outline-width: 1px;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+
+  main {
+    @apply container mx-auto flex flex-col px-5 py-10 sm:px-10;
+  }
+
+  h1 {
+    @apply text-gradient text-6xl font-semibold max-sm:text-4xl;
+  }
+
+  h3 {
+    @apply text-2xl font-bold;
+  }
+
+  ul {
+    @apply list-inside list-disc;
+  }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@layer components {
+  #home .subheading {
+    color: var(--color-light-100);
+    font-size: 1.125rem;
+    text-align: center;
+    margin-top: 1.25rem;
+  }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
-}
+  @media (max-width: 640px) {
+    #home .subheading {
+      font-size: 0.875rem;
+    }
+  }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
+  #explore-btn {
+    border-color: var(--color-dark-200);
+    background-color: var(--color-dark-100);
+    @apply flex w-fit cursor-pointer rounded-full border px-8 py-3.5 text-center max-sm:w-full;
+  }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+  #explore-btn a {
+    @apply flex-center w-full gap-2 text-center;
+  }
+
+  header {
+    @apply glass sticky top-0 z-50;
+  }
+
+  header nav {
+    @apply container mx-auto flex flex-row justify-between px-5 py-4 sm:px-10;
+  }
+
+  header .logo {
+    @apply flex flex-row items-center gap-2;
+  }
+
+  header .logo p {
+    @apply text-xl font-bold italic max-sm:hidden;
+  }
+
+  header ul {
+    @apply flex flex-row items-center gap-6;
+  }
+
+  .events {
+    @apply grid grid-cols-1 gap-10 sm:grid-cols-2 md:grid-cols-3;
+  }
+
+  #event-card {
+    @apply flex flex-col gap-3;
+  }
+
+  #event-card .poster {
+    @apply h-[300px] w-full rounded-lg object-cover;
+  }
+
+  #event-card .title {
+    @apply text-[20px] font-semibold line-clamp-1;
+  }
+
+  #event-card p {
+    color: var(--color-light-200);
+    font-size: 0.875rem;
+    font-weight: 300;
+  }
+
+  #event-card .datetime {
+    color: var(--color-light-200);
+    @apply flex flex-row flex-wrap items-center gap-4;
+  }
+
+  #event-card .datetime div {
+    @apply flex flex-row gap-2;
+  }
+
+  #event .header {
+    @apply mb-10 flex w-2/3 flex-col items-start gap-4 max-lg:w-full;
+  }
+
+  #event .details {
+    @apply mt-12 flex w-full flex-col items-start gap-12 max-lg:items-center lg:flex-row;
+  }
+
+  #event .details .content {
+    @apply flex flex-[2] flex-col gap-8 max-lg:w-full;
+  }
+
+  #event .details .content .banner {
+    @apply max-h-[457px] w-full rounded-lg object-cover;
+  }
+
+  #event .details .content .agenda {
+    @apply flex flex-col gap-2;
+  }
+
+  #event .details .content .agenda ul li {
+    color: var(--color-light-100);
+    font-size: 1.125rem;
+  }
+
+  @media (max-width: 640px) {
+    #event .details .content .agenda ul li {
+      font-size: 0.875rem;
+    }
+  }
+
+  #event .details .booking {
+    @apply w-full flex-1 border-l border-gray-700 p-4;
+  }
+
+  #event .details .booking .signup-card {
+    background-color: var(--color-dark-100);
+    border-color: var(--color-dark-200);
+    @apply card-shadow flex w-full flex-col gap-6 rounded-[10px] border px-5 py-6;
+  }
+
+  #event h2 {
+    @apply text-2xl font-bold;
+  }
+
+  #event p {
+    color: var(--color-light-100);
+    font-size: 1.125rem;
+  }
+
+  @media (max-width: 640px) {
+    #event p {
+      font-size: 0.875rem;
+    }
+  }
+
+  #event .flex-col-gap-2 {
+    @apply flex flex-col gap-2;
+  }
+
+  #event .flex-row-gap-2 {
+    @apply flex flex-row gap-2;
+  }
+
+  .pill {
+    background-color: var(--color-dark-100);
+    color: var(--color-light-100);
+    @apply rounded-[6px] px-5 py-2 text-xs;
+  }
+
+  #book-event {
+    @apply flex flex-col gap-6;
+  }
+
+  #book-event form {
+    @apply flex flex-col gap-6;
+  }
+
+  #book-event form div {
+    @apply flex flex-col gap-2;
+  }
+
+  #book-event form div input {
+    background-color: var(--color-dark-200);
+    @apply rounded-[6px] px-5 py-2.5;
+  }
+
+  #book-event form button {
+    background-color: var(--primary);
+    color: black;
+    @apply w-full cursor-pointer items-center justify-center rounded-[6px] px-4 py-2.5 text-lg font-semibold hover:opacity-90;
   }
 }
